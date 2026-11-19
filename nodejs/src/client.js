@@ -76,15 +76,14 @@ export async function gql(file, variables = {}) {
 }
 
 /**
- * Executes a mutation with one file upload using the GraphQL multipart request specification.
- * `uploadVariable` is the name of the variable of type Upload (set to null in `variables`).
+ * Executes a mutation with one file upload. FileNet expects a multipart request in which the
+ * variable `uploadVariable` holds the NAME of a file part ("file1") and that part carries the bytes.
  */
 export async function gqlUpload(file, variables, uploadVariable, content, contentType, fileName) {
   const { url } = config();
   const form = new FormData();
-  form.append('operations', JSON.stringify({ query: loadQuery(file), variables: { ...variables, [uploadVariable]: null } }));
-  form.append('map', JSON.stringify({ 0: [`variables.${uploadVariable}`] }));
-  form.append('0', new Blob([content], { type: contentType }), fileName);
+  form.append('operations', JSON.stringify({ query: loadQuery(file), variables: { ...variables, [uploadVariable]: 'file1' } }));
+  form.append('file1', new Blob([content], { type: contentType }), fileName);
   // fetch sets the multipart Content-Type header including the boundary.
   const response = await fetch(url, { method: 'POST', headers: authHeaders(), body: form });
   return parse(response);
@@ -92,6 +91,10 @@ export async function gqlUpload(file, variables, uploadVariable, content, conten
 
 /** Downloads the bytes behind a URL (for example a content element downloadUrl). */
 export async function download(downloadUrl) {
+  // FileNet returns a path relative to the context path (e.g. "/content?..."): resolve it against
+  // the GraphQL URL without its last segment.
+  const base = config().url.replace(/\/[^/]*$/, '');
+  if (downloadUrl.startsWith('/')) downloadUrl = base + downloadUrl;
   const response = await fetch(downloadUrl, { headers: authHeaders() });
   if (!response.ok) throw new Error(`HTTP ${response.status} while downloading ${downloadUrl}`);
   return Buffer.from(await response.arrayBuffer());

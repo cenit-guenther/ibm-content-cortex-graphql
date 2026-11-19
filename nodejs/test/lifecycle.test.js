@@ -26,7 +26,7 @@ test('FileNet GraphQL lifecycle', { skip }, async (t) => {
     if (docId) {
       try {
         const data = await versions(docId);
-        for (const v of data.document.versionSeries.versions.versions) {
+        for (const v of data.document.versionSeries.versions.versionables) {
           await deleteDocument(v.id).catch(() => {});
         }
       } catch { /* best effort cleanup */ }
@@ -41,7 +41,7 @@ test('FileNet GraphQL lifecycle', { skip }, async (t) => {
 
   await t.test('repository', async () => {
     const data = await repository(config().objectStore);
-    assert.ok(data.repository.id);
+    assert.ok(data.objectStore.id);
   });
 
   await t.test('create folder', async () => {
@@ -83,7 +83,7 @@ test('FileNet GraphQL lifecycle', { skip }, async (t) => {
 
   await t.test('checkout and checkin', async () => {
     const out = await checkout(docId);
-    const reservationId = out.checkoutDocument.id;
+    const reservationId = out.checkoutDocument.reservation.id;
     const inn = await checkin(reservationId);
     assert.ok(inn.checkinDocument.id);
   });

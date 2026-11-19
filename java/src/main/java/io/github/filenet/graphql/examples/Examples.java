@@ -31,8 +31,8 @@ public final class Examples {
     }
 
     // 02 - repositories
-    public JsonNode repositories() throws IOException, InterruptedException {
-        return client.execute("02-repository/repositories.graphql", Map.of());
+    public JsonNode repositoryObjects() throws IOException, InterruptedException {
+        return client.execute("02-repository/repository-objects.graphql", vars());
     }
 
     public JsonNode repository() throws IOException, InterruptedException {

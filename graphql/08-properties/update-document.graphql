@@ -10,7 +10,7 @@ mutation UpdateDocument(
     identifier: $identifier
     documentProperties: {
       name: $name
-      properties: [{ symbolicName: "DocumentTitle", value: $title }]
+      properties: [{ DocumentTitle: $title }]
     }
   ) {
     id

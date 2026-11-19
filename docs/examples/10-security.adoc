@@ -41,5 +41,6 @@ See `Examples#permissions`.
 
 == Notes
 
+* `permissions` is a list of interface types, so fields are selected with inline fragments (`... on Permission`, `... on AccessPermission`).
 * `accessMask` is a bit mask of FileNet access rights; `permissionSource` tells whether an entry is direct, inherited or from a template.
 * The examples only read permissions on purpose; changing ACLs on a shared system can lock users out.

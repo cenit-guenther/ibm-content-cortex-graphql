@@ -1,6 +1,6 @@
 # Cancels a checkout and discards the reservation.
 mutation CancelCheckout($repositoryIdentifier: String!, $identifier: String!) {
-  cancelDocumentCheckout(repositoryIdentifier: $repositoryIdentifier, documentIdentifier: $identifier) {
+  cancelDocumentCheckout(repositoryIdentifier: $repositoryIdentifier, identifier: $identifier) {
     id
   }
 }

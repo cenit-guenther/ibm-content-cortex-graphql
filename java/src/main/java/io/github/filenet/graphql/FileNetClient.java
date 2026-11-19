@@ -97,24 +97,23 @@ public final class FileNetClient {
     }
 
     /**
-     * Executes a mutation with a single file upload using the GraphQL multipart request
-     * specification. {@code uploadVariable} is the name of the variable of type Upload.
+     * Executes a mutation with a single file upload. FileNet expects a multipart request in which
+     * the variable {@code uploadVariable} holds the NAME of a file part ("file1") and that part
+     * carries the bytes.
      */
     public JsonNode executeUpload(String file, Map<String, Object> variables, String uploadVariable,
                                   byte[] content, String contentType, String fileName)
             throws IOException, InterruptedException {
         Map<String, Object> vars = new java.util.HashMap<>(variables);
-        vars.put(uploadVariable, null);
+        vars.put(uploadVariable, "file1");
         ObjectNode operations = MAPPER.createObjectNode();
         operations.put("query", loadQuery(file));
         operations.set("variables", MAPPER.valueToTree(vars));
-        String map = MAPPER.writeValueAsString(Map.of("0", List.of("variables." + uploadVariable)));
 
         String boundary = "----filenet" + UUID.randomUUID();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         writeTextPart(out, boundary, "operations", MAPPER.writeValueAsString(operations));
-        writeTextPart(out, boundary, "map", map);
-        out.write(("--" + boundary + "\r\nContent-Disposition: form-data; name=\"0\"; filename=\"" + fileName
+        out.write(("--" + boundary + "\r\nContent-Disposition: form-data; name=\"file1\"; filename=\"" + fileName
                 + "\"\r\nContent-Type: " + contentType + "\r\n\r\n").getBytes(StandardCharsets.UTF_8));
         out.write(content);
         out.write(("\r\n--" + boundary + "--\r\n").getBytes(StandardCharsets.UTF_8));
@@ -129,6 +128,11 @@ public final class FileNetClient {
 
     /** Downloads the bytes behind a URL (for example a content element downloadUrl). */
     public byte[] download(String downloadUrl) throws IOException, InterruptedException {
+        // FileNet returns a path relative to the context path (e.g. "/content?..."): resolve it
+        // against the GraphQL URL without its last segment.
+        if (downloadUrl.startsWith("/")) {
+            downloadUrl = url.substring(0, url.lastIndexOf('/')) + downloadUrl;
+        }
         HttpRequest request = HttpRequest.newBuilder(URI.create(downloadUrl))
                 .header("Authorization", authorization)
                 .GET()

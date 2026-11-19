@@ -29,7 +29,7 @@ public final class Main {
         Examples ex = new Examples(FileNetClient.fromEnvironment());
         Object result = switch (args[0]) {
             case "introspection" -> args.length > 1 ? ex.typeDetails(args[1]) : ex.schemaOverview();
-            case "repository" -> ex.repositories();
+            case "repository" -> ex.repository();
             case "fetch" -> {
                 need(args, 3);
                 yield args[1].equals("document") ? ex.document(args[2]) : ex.folder(args[2]);

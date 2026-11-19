@@ -7,7 +7,7 @@ Every call is an HTTP `POST` to the GraphQL endpoint with a JSON body:
 [source,json]
 ----
 {
-  "query": "query Repository($repositoryIdentifier: String!) { repository(repositoryIdentifier: $repositoryIdentifier) { id } }",
+  "query": "query ObjectStore($repositoryIdentifier: String!) { objectStore(identifier: $repositoryIdentifier) { id } }",
   "variables": { "repositoryIdentifier": "OS1" }
 }
 ----
@@ -16,7 +16,7 @@ The response contains `data` and, when something went wrong, `errors`. FileNet c
 
 == Queries and mutations
 
-Queries read data (`repositories`, `document`, `folder`, `documents`). Mutations change data (`createFolder`, `createDocument`, `updateDocument`, `checkoutDocument`, ...).
+Queries read data (`objectStore`, `document`, `folder`, `documents`). Mutations change data (`createFolder`, `createDocument`, `updateDocument`, `checkoutDocument`, ...).
 
 == Repository identifier
 
@@ -31,7 +31,7 @@ Objects are addressed by an `identifier` that is either:
 
 == Content upload
 
-File uploads use the https://github.com/jaydenseric/graphql-multipart-request-spec[GraphQL multipart request specification]: a `multipart/form-data` request with the parts `operations` (query and variables, the file variable is `null`), `map` (which part fills which variable) and the file part.
+FileNet uses a multipart request for uploads. There is no `Upload` scalar: the content variable is declared as `String` and holds the *name of a file part* (here `file1`). The request has the part `operations` (query and variables) and the file part itself.
 
 == Cleaning up
 

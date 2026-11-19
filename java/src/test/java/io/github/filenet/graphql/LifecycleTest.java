@@ -46,7 +46,7 @@ class LifecycleTest {
     static void tearDown() {
         if (docId != null && !docId.isEmpty()) {
             try {
-                for (JsonNode v : ex.versions(docId).at("/document/versionSeries/versions/versions")) {
+                for (JsonNode v : ex.versions(docId).at("/document/versionSeries/versions/versionables")) {
                     try { ex.deleteDocument(v.path("id").asText()); } catch (Exception ignored) { }
                 }
             } catch (Exception ignored) { }
@@ -60,7 +60,7 @@ class LifecycleTest {
     @Order(1)
     void introspectionAndRepository() throws Exception {
         assertFalse(ex.schemaOverview().at("/__schema/queryType/name").asText().isEmpty());
-        assertFalse(ex.repository().at("/repository/id").asText().isEmpty());
+        assertFalse(ex.repository().at("/objectStore/id").asText().isEmpty());
     }
 
     @Test
@@ -107,7 +107,7 @@ class LifecycleTest {
     @Test
     @Order(101)
     void checkoutAndCheckin() throws Exception {
-        String reservationId = ex.checkout(docId).at("/checkoutDocument/id").asText();
+        String reservationId = ex.checkout(docId).at("/checkoutDocument/reservation/id").asText();
         assertFalse(reservationId.isEmpty());
         assertFalse(ex.checkin(reservationId).at("/checkinDocument/id").asText().isEmpty());
     }

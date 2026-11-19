@@ -8,7 +8,7 @@ Set `FILENET_USER` and `FILENET_PASSWORD`. All implementations send an `Authoriz
 ----
 curl --user "$FILENET_USER:$FILENET_PASSWORD" \
      --header "Content-Type: application/json" \
-     --data '{"query":"{ repositories { id symbolicName } }"}' \
+     --data '{"query":"{ objectStore(identifier: \"OS1\") { id symbolicName } }"}' \
      "$FILENET_GRAPHQL_URL"
 ----
 

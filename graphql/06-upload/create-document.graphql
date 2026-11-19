@@ -1,19 +1,25 @@
 # Creates a document with one content element and files it into a folder.
-# $file is of the scalar type Upload; it is sent as a multipart request
-# (GraphQL multipart request specification), see docs/examples/06-upload.adoc.
+# FileNet has no Upload scalar: the content variable is declared as String and is
+# replaced by the file part of a multipart request, see docs/examples/06-upload.adoc.
 mutation CreateDocument(
   $repositoryIdentifier: String!
   $name: String!
   $folder: String!
   $contentType: String!
-  $file: Upload
+  $file: String
 ) {
   createDocument(
     repositoryIdentifier: $repositoryIdentifier
     documentProperties: {
       name: $name
       contentElements: {
-        replace: [{ type: CONTENT_TRANSFER, contentType: $contentType, content: $file }]
+        replace: [
+          {
+            type: CONTENT_TRANSFER
+            contentType: $contentType
+            subContentTransfer: { content: $file, retrievalName: $name }
+          }
+        ]
       }
     }
     fileInFolderIdentifier: $folder

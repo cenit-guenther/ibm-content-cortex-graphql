@@ -1,19 +1,19 @@
 = Repositories (object stores)
 
-A repository is a FileNet object store. List the ones you can access and read the configured one.
+A repository is a FileNet object store. The schema has no query that lists all object stores; read the configured one by symbolic name or id and list a few of its folders.
 
 == Queries
-
-.graphql/02-repository/repositories.graphql
-[source,graphql]
-----
-include::../../graphql/02-repository/repositories.graphql[]
-----
 
 .graphql/02-repository/repository.graphql
 [source,graphql]
 ----
 include::../../graphql/02-repository/repository.graphql[]
+----
+
+.graphql/02-repository/repository-objects.graphql
+[source,graphql]
+----
+include::../../graphql/02-repository/repository-objects.graphql[]
 ----
 
 == curl
@@ -43,7 +43,7 @@ include::../../nodejs/src/examples/02-repository.js[]
 cd java && mvn -q compile exec:java -Dexec.args="repository"
 ----
 
-See `Examples#repositories` and `Examples#repository`.
+See `Examples#repository` and `Examples#repositoryObjects`.
 
 == Notes
 

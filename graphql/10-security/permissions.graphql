@@ -4,12 +4,17 @@ query Permissions($repositoryIdentifier: String!, $identifier: String!) {
     id
     name
     permissions {
-      granteeName
-      type
-      accessType
-      accessMask
-      inheritableDepth
-      permissionSource
+      className
+      ... on Permission {
+        granteeName
+        granteeType
+        permissionSource
+      }
+      ... on AccessPermission {
+        accessType
+        accessMask
+        inheritableDepth
+      }
     }
   }
 }

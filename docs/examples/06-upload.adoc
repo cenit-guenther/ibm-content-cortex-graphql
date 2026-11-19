@@ -1,6 +1,6 @@
 = Create a document with content upload
 
-Uploads use the GraphQL multipart request specification. The mutation declares a variable of the scalar type `Upload`; the file travels in a separate part of the request.
+FileNet uploads use a `multipart/form-data` request. The mutation declares the content variable as `String`; its value is the name of the file part that carries the bytes.
 
 == Mutations
 
@@ -23,9 +23,8 @@ include::../../graphql/06-upload/delete-document.graphql[]
 POST /content-services-graphql/graphql
 Content-Type: multipart/form-data; boundary=...
 
---...  name="operations"   {"query":"mutation CreateDocument(...)","variables":{...,"file":null}}
---...  name="map"          {"0":["variables.file"]}
---...  name="0"; filename="hello.txt"; Content-Type: text/plain   <file bytes>
+--...  name="operations"   {"query":"mutation CreateDocument(...)","variables":{...,"file":"file1"}}
+--...  name="file1"; filename="hello.txt"; Content-Type: text/plain   <file bytes>
 ----
 
 == curl
@@ -66,4 +65,4 @@ cd java && mvn -q compile exec:java -Dexec.args="upload ./hello.txt /demo"
 == Notes
 
 * `fileInFolderIdentifier` files the document into a folder; `checkinAction: {}` checks it in immediately.
-* The upload variable is sent as `null` in `operations`; the `map` part connects it to the file.
+* The variable `file` contains the part name `file1`; the content of that part becomes the document content (`subContentTransfer.content`).

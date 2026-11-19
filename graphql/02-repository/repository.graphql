@@ -1,8 +1,8 @@
-# Reads a single repository (object store) by symbolic name or id.
-query Repository($repositoryIdentifier: String!) {
-  repository(repositoryIdentifier: $repositoryIdentifier) {
+# Reads a single object store by symbolic name or id.
+query ObjectStore($repositoryIdentifier: String!) {
+  objectStore(identifier: $repositoryIdentifier) {
     id
     symbolicName
-    name
+    displayName
   }
 }

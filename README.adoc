@@ -59,7 +59,7 @@ toc::[]
 ----
 cp .env.example .env
 ----
-. Run an example (here: list the repositories):
+. Run an example (here: read the object store):
 +
 [source,bash]
 ----
@@ -119,7 +119,7 @@ WARNING: Run the tests only against a test or development system.
 
 == Compatibility
 
-The queries follow the public schema of IBM FileNet Content Services GraphQL. Field names can differ between versions; use the introspection example (01) to check your installation and see link:docs/troubleshooting.adoc[Troubleshooting].
+The queries were verified with all three implementations against a real IBM FileNet Content Services GraphQL server (integration tests, see above). Field names can differ between versions; use the introspection example (01) to check your installation and see link:docs/troubleshooting.adoc[Troubleshooting].
 
 == Contributing and license
 

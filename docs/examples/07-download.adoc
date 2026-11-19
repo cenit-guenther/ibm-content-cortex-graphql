@@ -47,5 +47,6 @@ See `Examples#downloadContent` and `FileNetClient#download`.
 
 == Notes
 
+* `downloadUrl` is relative to the context path of the installation (for example `/content?repositoryIdentifier=...`); the examples prepend the GraphQL URL without its last segment.
 * A document can have several content elements; the examples use the first one.
 * The same credentials are used for the GraphQL call and for the download.

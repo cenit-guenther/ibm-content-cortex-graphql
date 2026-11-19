@@ -32,7 +32,7 @@ include::../../graphql/09-versioning/versions.graphql[]
 
 [source,bash]
 ----
-curl/09-versioning.sh checkout "{DOCUMENT-ID}"    # returns the id of the reservation
+curl/09-versioning.sh checkout "{DOCUMENT-ID}"    # the response contains the reservation id
 curl/09-versioning.sh checkin  "{RESERVATION-ID}"
 curl/09-versioning.sh versions "{DOCUMENT-ID}"
 curl/09-versioning.sh cancel   "{RESERVATION-ID}"
@@ -62,4 +62,4 @@ See `Examples#checkout`, `Examples#checkin`, `Examples#cancelCheckout` and `Exam
 
 == Notes
 
-Check in and cancel operate on the *reservation id* returned by the checkout, not on the id of the released version.
+Check in and cancel operate on the *reservation id* (`reservation { id }` in the checkout response), not on the id of the released version. The `checkoutDocument` response itself describes the released version.

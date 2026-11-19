@@ -1,0 +1,7 @@
+# Lists objects of a class in the object store (here: the first 5 folders), which also
+# proves that the object store is reachable and readable.
+query RepositoryObjects($repositoryIdentifier: String!) {
+  folders(repositoryIdentifier: $repositoryIdentifier, from: "Folder", pageSize: 5) {
+    folders { id name pathName }
+  }
+}

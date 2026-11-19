@@ -1,9 +1,13 @@
-# Checks out a document; the result is the reservation (working copy).
+# Checks out a document. The response describes the released version; the working copy
+# (reservation) is returned in the field "reservation". Check in or cancel using its id.
 mutation CheckoutDocument($repositoryIdentifier: String!, $identifier: String!) {
-  checkoutDocument(repositoryIdentifier: $repositoryIdentifier, documentIdentifier: $identifier) {
+  checkoutDocument(repositoryIdentifier: $repositoryIdentifier, identifier: $identifier) {
     id
     name
     isReserved
-    minorVersionNumber
+    reservation {
+      id
+      minorVersionNumber
+    }
   }
 }

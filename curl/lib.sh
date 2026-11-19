@@ -74,16 +74,16 @@ gql() {
     "$FILENET_GRAPHQL_URL" | pretty
 }
 
-# gql_upload <graphql file> <variables JSON> <variable name of the Upload> <local file> <mime type>
-# Sends a multipart request following the GraphQL multipart request specification.
+# gql_upload <graphql file> <variables JSON> <variable name of the file content> <local file> <mime type>
+# FileNet multipart upload: the variable holds the NAME of a file part ("file1"), and that part
+# carries the bytes. The JSON request is sent in the "operations" part.
 gql_upload() {
   local query operations
   query="$(load_query "$1")"
   operations="{\"query\":\"${query}\",\"variables\":${2}}"
   curl "${CURL_BASE[@]}" \
     --form-string "operations=${operations}" \
-    --form-string "map={\"0\":[\"variables.$3\"]}" \
-    --form "0=@$4;type=$5" \
+    --form "file1=@$4;type=$5" \
     "$FILENET_GRAPHQL_URL" | pretty
 }
 

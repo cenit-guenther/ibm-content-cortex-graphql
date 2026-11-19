@@ -23,7 +23,7 @@
 |The message names the failing field. Typical causes are a wrong identifier, missing permissions or a class without the requested property.
 
 |Upload fails
-|Check that the `map` part points to `variables.file` and that the content type is valid. Some reverse proxies limit the request size.
+|`No multi-part file found for the content argument` means the variable value does not match the name of a file part (use `file1` for both). Also check that the content type is valid. Some reverse proxies limit the request size.
 
 |Test data is left behind
 |Tests clean up at the end. After a crash, delete folders named `gql-example-*` below `FILENET_TEST_FOLDER`.
@@ -31,4 +31,4 @@
 
 == Verification status
 
-The query files are derived from the documented FileNet Content Services GraphQL schema. Report differences you find on your version (name, version and fix-pack) through an issue so the examples can be adapted.
+The examples were verified against one FileNet Content Services GraphQL installation. Report differences you find on your version (product version and fix pack) through an issue so the examples can be adapted.

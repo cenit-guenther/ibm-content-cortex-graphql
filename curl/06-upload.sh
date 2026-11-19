@@ -7,5 +7,5 @@ folder="${2:?target folder}"
 name="${3:-$(basename "$file")}"
 mime="${4:-text/plain}"
 gql_upload 06-upload/create-document.graphql \
-  "{\"repositoryIdentifier\":\"$FILENET_OBJECT_STORE\",\"name\":\"$name\",\"folder\":\"$folder\",\"contentType\":\"$mime\",\"file\":null}" \
+  "{\"repositoryIdentifier\":\"$FILENET_OBJECT_STORE\",\"name\":\"$name\",\"folder\":\"$folder\",\"contentType\":\"$mime\",\"file\":\"file1\"}" \
   file "$file" "$mime"

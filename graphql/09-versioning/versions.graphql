@@ -4,7 +4,7 @@ query Versions($repositoryIdentifier: String!, $identifier: String!) {
     id
     versionSeries {
       versions {
-        versions {
+        versionables {
           id
           majorVersionNumber
           minorVersionNumber

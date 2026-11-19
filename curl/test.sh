@@ -53,7 +53,7 @@ folder_id="$(printf '%s' "$out" | json_first id)"
 [[ -n "$folder_id" ]] || fail "create-folder returned no id"; pass "create folder $folder_id"
 
 echo "hello FileNet GraphQL $suffix" > "$tmp/hello.txt"
-out="$(gql_upload 06-upload/create-document.graphql "{\"repositoryIdentifier\":\"$os\",\"name\":\"hello-$suffix.txt\",\"folder\":\"$folder_id\",\"contentType\":\"text/plain\",\"file\":null}" file "$tmp/hello.txt" text/plain)"
+out="$(gql_upload 06-upload/create-document.graphql "{\"repositoryIdentifier\":\"$os\",\"name\":\"hello-$suffix.txt\",\"folder\":\"$folder_id\",\"contentType\":\"text/plain\",\"file\":\"file1\"}" file "$tmp/hello.txt" text/plain)"
 no_errors "$out" upload
 doc_id="$(printf '%s' "$out" | json_first id)"
 [[ -n "$doc_id" ]] || fail "upload returned no id"; pass "upload document $doc_id"
@@ -78,7 +78,8 @@ no_errors "$out" permissions; pass permissions
 
 out="$(gql 09-versioning/checkout-document.graphql "{\"repositoryIdentifier\":\"$os\",\"identifier\":\"$doc_id\"}")"
 no_errors "$out" checkout
-res_id="$(printf '%s' "$out" | json_first id)"
+res_id="$(printf '%s' "$out" | grep -o '"reservation":{"id":"[^"]*"' | sed 's/.*:"//; s/"$//')"
+[[ -n "$res_id" ]] || fail "checkout returned no reservation id"
 out="$(gql 09-versioning/checkin-document.graphql "{\"repositoryIdentifier\":\"$os\",\"identifier\":\"$res_id\"}")"
 no_errors "$out" checkin; pass "checkout / checkin"
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 source "$(dirname "$0")/lib.sh"
 
-# Lists all repositories, then shows the configured object store.
-gql 02-repository/repositories.graphql
+# Shows the configured object store and lists a few folders.
 gql 02-repository/repository.graphql "{\"repositoryIdentifier\":\"$FILENET_OBJECT_STORE\"}"
+gql 02-repository/repository-objects.graphql "{\"repositoryIdentifier\":\"$FILENET_OBJECT_STORE\"}"

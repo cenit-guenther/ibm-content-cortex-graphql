@@ -41,5 +41,6 @@ See `Examples#updateDocument`.
 
 == Notes
 
+* Properties are passed as `properties: [{ <SymbolicName>: value }]`.
 * Use the symbolic name of the property (for example `DocumentTitle` or the symbolic name of your custom property). Find names with the introspection example or in your object store definition.
 * After renaming, the path of the document changes; use the id for follow-up calls.

@@ -2,7 +2,7 @@
 mutation CheckinDocument($repositoryIdentifier: String!, $identifier: String!) {
   checkinDocument(
     repositoryIdentifier: $repositoryIdentifier
-    documentIdentifier: $identifier
+    identifier: $identifier
     checkinAction: { checkinMinorVersion: false }
   ) {
     id
