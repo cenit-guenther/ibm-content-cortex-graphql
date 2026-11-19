@@ -1,0 +1,40 @@
+= Getting started
+
+== Prerequisites
+
+* A reachable IBM FileNet Content Services GraphQL endpoint and a user with access to an object store (use a test system).
+* `curl` (and optionally `jq` for pretty-printed output).
+* Node.js 20.12 or newer (no `npm install` required).
+* Java 17 or newer and Maven 3.8 or newer.
+
+== Configure
+
+[source,bash]
+----
+cp .env.example .env
+# edit .env: FILENET_GRAPHQL_URL, FILENET_OBJECT_STORE, FILENET_USER, FILENET_PASSWORD
+----
+
+See the README for all variables. Environment variables take precedence over `.env`.
+
+== Repository layout
+
+The queries live in `graphql/<nn-topic>/<operation>.graphql`. The three implementations load these files, so a query exists exactly once. Comment lines (starting with `#`) are removed before the query is sent.
+
+== Run an example
+
+[source,bash]
+----
+curl/01-introspection.sh Document
+node nodejs/src/examples/01-introspection.js Document
+(cd java && mvn -q compile exec:java -Dexec.args="introspection Document")
+----
+
+== Run the tests
+
+[source,bash]
+----
+scripts/run-all-tests.sh
+----
+
+The tests create a folder named `gql-example-<timestamp>` below `FILENET_TEST_FOLDER`, run through all topics and delete the data again.

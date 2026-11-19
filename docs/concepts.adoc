@@ -1,0 +1,42 @@
+= GraphQL and FileNet concepts
+
+== Request format
+
+Every call is an HTTP `POST` to the GraphQL endpoint with a JSON body:
+
+[source,json]
+----
+{
+  "query": "query Repository($repositoryIdentifier: String!) { repository(repositoryIdentifier: $repositoryIdentifier) { id } }",
+  "variables": { "repositoryIdentifier": "OS1" }
+}
+----
+
+The response contains `data` and, when something went wrong, `errors`. FileNet can return HTTP 200 together with `errors`, so always check both. The clients in this repository raise an error in that case.
+
+== Queries and mutations
+
+Queries read data (`repositories`, `document`, `folder`, `documents`). Mutations change data (`createFolder`, `createDocument`, `updateDocument`, `checkoutDocument`, ...).
+
+== Repository identifier
+
+Almost every field takes a `repositoryIdentifier`: the symbolic name or the id of an object store. It is configured with `FILENET_OBJECT_STORE`.
+
+== Object identifiers
+
+Objects are addressed by an `identifier` that is either:
+
+* an *id* in braces, for example `{4D0B1E8B-0000-C61A-9A5B-2C5D1B6E3F11}`, or
+* a *path*, for example `/Invoices/2024/invoice.pdf`.
+
+== Content upload
+
+File uploads use the https://github.com/jaydenseric/graphql-multipart-request-spec[GraphQL multipart request specification]: a `multipart/form-data` request with the parts `operations` (query and variables, the file variable is `null`), `map` (which part fills which variable) and the file part.
+
+== Cleaning up
+
+Deleting a folder does not delete the documents filed in it. Delete documents explicitly. `deleteDocument` removes one version; delete every version when you want to remove a document completely.
+
+== Where to find the schema
+
+Use the introspection example (01) or a tool such as GraphiQL if your installation provides it. The schema is the authority for field names in your version.

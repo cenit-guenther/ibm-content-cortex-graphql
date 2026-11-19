@@ -1,0 +1,45 @@
+= Update properties
+
+`updateDocument` changes system properties such as `name` and arbitrary properties by symbolic name.
+
+== Mutation
+
+.graphql/08-properties/update-document.graphql
+[source,graphql]
+----
+include::../../graphql/08-properties/update-document.graphql[]
+----
+
+== curl
+
+[source,bash]
+----
+curl/08-properties.sh "/demo/hello.txt" hello-renamed.txt "My title"
+----
+
+== Node.js
+
+[source,bash]
+----
+node nodejs/src/examples/08-properties.js "/demo/hello.txt" hello-renamed.txt "My title"
+----
+
+.nodejs/src/examples/08-properties.js
+[source,javascript]
+----
+include::../../nodejs/src/examples/08-properties.js[]
+----
+
+== Java
+
+[source,bash]
+----
+cd java && mvn -q compile exec:java -Dexec.args="properties /demo/hello.txt hello-renamed.txt 'My title'"
+----
+
+See `Examples#updateDocument`.
+
+== Notes
+
+* Use the symbolic name of the property (for example `DocumentTitle` or the symbolic name of your custom property). Find names with the introspection example or in your object store definition.
+* After renaming, the path of the document changes; use the id for follow-up calls.

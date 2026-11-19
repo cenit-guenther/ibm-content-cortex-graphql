@@ -1,0 +1,8 @@
+.env
+node_modules/
+java/target/
+*.log
+.idea/
+.vscode/
+.DS_Store
+docs/build/

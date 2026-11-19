@@ -1,0 +1,9 @@
+# Checks out a document; the result is the reservation (working copy).
+mutation CheckoutDocument($repositoryIdentifier: String!, $identifier: String!) {
+  checkoutDocument(repositoryIdentifier: $repositoryIdentifier, documentIdentifier: $identifier) {
+    id
+    name
+    isReserved
+    minorVersionNumber
+  }
+}

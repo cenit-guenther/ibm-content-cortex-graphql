@@ -1,0 +1,6 @@
+# Deletes a folder (it must not contain other objects that prevent deletion).
+mutation DeleteFolder($repositoryIdentifier: String!, $identifier: String!) {
+  deleteFolder(repositoryIdentifier: $repositoryIdentifier, identifier: $identifier) {
+    id
+  }
+}

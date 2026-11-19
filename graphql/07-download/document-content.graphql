@@ -1,0 +1,16 @@
+# Returns the download URL of each content element. Fetch the URL with a normal
+# authenticated HTTP GET to retrieve the bytes.
+query DocumentContent($repositoryIdentifier: String!, $identifier: String!) {
+  document(repositoryIdentifier: $repositoryIdentifier, identifier: $identifier) {
+    id
+    name
+    contentElements {
+      ... on ContentTransfer {
+        retrievalName
+        contentType
+        contentSize
+        downloadUrl
+      }
+    }
+  }
+}

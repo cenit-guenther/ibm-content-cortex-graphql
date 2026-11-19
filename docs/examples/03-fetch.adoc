@@ -1,0 +1,52 @@
+= Fetch documents and folders
+
+Read a single object by id or by path, including the contents of a folder.
+
+== Queries
+
+.graphql/03-fetch/document.graphql
+[source,graphql]
+----
+include::../../graphql/03-fetch/document.graphql[]
+----
+
+.graphql/03-fetch/folder.graphql
+[source,graphql]
+----
+include::../../graphql/03-fetch/folder.graphql[]
+----
+
+== curl
+
+[source,bash]
+----
+curl/03-fetch.sh folder /
+curl/03-fetch.sh document "/Invoices/invoice.pdf"
+curl/03-fetch.sh document "{4D0B1E8B-0000-C61A-9A5B-2C5D1B6E3F11}"
+----
+
+== Node.js
+
+[source,bash]
+----
+node nodejs/src/examples/03-fetch.js folder /
+----
+
+.nodejs/src/examples/03-fetch.js
+[source,javascript]
+----
+include::../../nodejs/src/examples/03-fetch.js[]
+----
+
+== Java
+
+[source,bash]
+----
+cd java && mvn -q compile exec:java -Dexec.args="fetch folder /"
+----
+
+See `Examples#document` and `Examples#folder`.
+
+== Notes
+
+Large folders return their children in pages. Request only the fields you need.

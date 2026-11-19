@@ -1,0 +1,56 @@
+= Folders: create, rename, delete
+
+== Mutations
+
+.graphql/05-folders/create-folder.graphql
+[source,graphql]
+----
+include::../../graphql/05-folders/create-folder.graphql[]
+----
+
+.graphql/05-folders/update-folder.graphql
+[source,graphql]
+----
+include::../../graphql/05-folders/update-folder.graphql[]
+----
+
+.graphql/05-folders/delete-folder.graphql
+[source,graphql]
+----
+include::../../graphql/05-folders/delete-folder.graphql[]
+----
+
+== curl
+
+[source,bash]
+----
+curl/05-folders.sh create demo /
+curl/05-folders.sh rename /demo demo-renamed
+curl/05-folders.sh delete /demo-renamed
+----
+
+== Node.js
+
+[source,bash]
+----
+node nodejs/src/examples/05-folders.js create demo /
+----
+
+.nodejs/src/examples/05-folders.js
+[source,javascript]
+----
+include::../../nodejs/src/examples/05-folders.js[]
+----
+
+== Java
+
+[source,bash]
+----
+cd java && mvn -q compile exec:java -Dexec.args="folder create demo /"
+----
+
+See `Examples#createFolder`, `Examples#renameFolder` and `Examples#deleteFolder`.
+
+== Notes
+
+Documents filed in a folder are not deleted with it, see <<_graphql_and_filenet_concepts,concepts>>.

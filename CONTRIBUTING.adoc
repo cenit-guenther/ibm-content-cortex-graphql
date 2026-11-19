@@ -1,0 +1,21 @@
+= Contributing
+
+Contributions are welcome: new examples, fixes for different FileNet versions, and documentation improvements.
+
+== Ground rules
+
+* Documentation and code comments are written in *English*.
+* Documentation is written in *AsciiDoc* (`.adoc`).
+* Every new operation consists of a shared file in `graphql/`, an implementation in `curl/`, `nodejs/` and `java/`, an integration test step, and a page in `docs/examples/`.
+* Configuration comes from environment variables only. Never commit credentials, tokens, hostnames of internal systems or customer data.
+* Tests must create uniquely named test data and clean it up.
+
+== Checks before a pull request
+
+[source,bash]
+----
+shellcheck -x -S warning curl/*.sh scripts/*.sh
+(cd nodejs && npm run lint && npm test)
+(cd java && mvn verify)
+asciidoctor -o /dev/null README.adoc docs/index.adoc
+----

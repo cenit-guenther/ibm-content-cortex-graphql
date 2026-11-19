@@ -1,0 +1,37 @@
+= FileNet GraphQL Examples: Documentation
+:toc: left
+:toclevels: 2
+:icons: font
+:source-highlighter: rouge
+:sectnums:
+:leveloffset: +1
+
+This documentation explains how to call the IBM FileNet Content Services GraphQL API and walks through tested examples in curl, Node.js and Java.
+
+include::getting-started.adoc[]
+
+include::authentication.adoc[]
+
+include::concepts.adoc[]
+
+include::examples/01-introspection.adoc[]
+
+include::examples/02-repository.adoc[]
+
+include::examples/03-fetch.adoc[]
+
+include::examples/04-search.adoc[]
+
+include::examples/05-folders.adoc[]
+
+include::examples/06-upload.adoc[]
+
+include::examples/07-download.adoc[]
+
+include::examples/08-properties.adoc[]
+
+include::examples/09-versioning.adoc[]
+
+include::examples/10-security.adoc[]
+
+include::troubleshooting.adoc[]

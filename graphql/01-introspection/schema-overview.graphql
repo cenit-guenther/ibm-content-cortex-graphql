@@ -1,0 +1,8 @@
+# Lists the root types and all type names exposed by the GraphQL schema.
+query SchemaOverview {
+  __schema {
+    queryType { name }
+    mutationType { name }
+    types { name kind }
+  }
+}

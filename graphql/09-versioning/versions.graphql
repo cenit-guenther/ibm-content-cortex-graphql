@@ -1,0 +1,16 @@
+# Lists all versions of the version series of a document.
+query Versions($repositoryIdentifier: String!, $identifier: String!) {
+  document(repositoryIdentifier: $repositoryIdentifier, identifier: $identifier) {
+    id
+    versionSeries {
+      versions {
+        versions {
+          id
+          majorVersionNumber
+          minorVersionNumber
+          versionStatus
+        }
+      }
+    }
+  }
+}

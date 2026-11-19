@@ -1,0 +1,47 @@
+= Search
+
+The `documents` query runs a FileNet search. `from` is the class to search, `where` is a SQL-like condition on its properties.
+
+== Query
+
+.graphql/04-search/search-documents.graphql
+[source,graphql]
+----
+include::../../graphql/04-search/search-documents.graphql[]
+----
+
+== curl
+
+[source,bash]
+----
+curl/04-search.sh "DocumentTitle LIKE 'Invoice%'"
+curl/04-search.sh "This INFOLDER '/Invoices'"
+----
+
+== Node.js
+
+[source,bash]
+----
+node nodejs/src/examples/04-search.js "DocumentTitle LIKE 'Invoice%'"
+----
+
+.nodejs/src/examples/04-search.js
+[source,javascript]
+----
+include::../../nodejs/src/examples/04-search.js[]
+----
+
+== Java
+
+[source,bash]
+----
+cd java && mvn -q compile exec:java -Dexec.args="search \"DocumentTitle LIKE 'Invoice%'\""
+----
+
+See `Examples#searchDocuments`.
+
+== Notes
+
+* Useful conditions: `DocumentTitle LIKE '...'`, `This INFOLDER '<path-or-id>'`, `DateCreated > 20240101T000000Z`.
+* `pageInfo.token` is a continuation token for the next page of a large result.
+* Quote string values with single quotes and escape quotes inside them by doubling them.

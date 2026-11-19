@@ -1,0 +1,69 @@
+= Create a document with content upload
+
+Uploads use the GraphQL multipart request specification. The mutation declares a variable of the scalar type `Upload`; the file travels in a separate part of the request.
+
+== Mutations
+
+.graphql/06-upload/create-document.graphql
+[source,graphql]
+----
+include::../../graphql/06-upload/create-document.graphql[]
+----
+
+.graphql/06-upload/delete-document.graphql
+[source,graphql]
+----
+include::../../graphql/06-upload/delete-document.graphql[]
+----
+
+== Request layout
+
+[source,text]
+----
+POST /content-services-graphql/graphql
+Content-Type: multipart/form-data; boundary=...
+
+--...  name="operations"   {"query":"mutation CreateDocument(...)","variables":{...,"file":null}}
+--...  name="map"          {"0":["variables.file"]}
+--...  name="0"; filename="hello.txt"; Content-Type: text/plain   <file bytes>
+----
+
+== curl
+
+[source,bash]
+----
+curl/06-upload.sh ./hello.txt /demo
+----
+
+.curl/06-upload.sh
+[source,bash]
+----
+include::../../curl/06-upload.sh[lines=3..]
+----
+
+== Node.js
+
+[source,bash]
+----
+node nodejs/src/examples/06-upload.js ./hello.txt /demo
+----
+
+.nodejs/src/examples/06-upload.js
+[source,javascript]
+----
+include::../../nodejs/src/examples/06-upload.js[]
+----
+
+== Java
+
+[source,bash]
+----
+cd java && mvn -q compile exec:java -Dexec.args="upload ./hello.txt /demo"
+----
+
+`FileNetClient#executeUpload` builds the multipart body with plain `java.net.http`; see `Examples#createDocument`.
+
+== Notes
+
+* `fileInFolderIdentifier` files the document into a folder; `checkinAction: {}` checks it in immediately.
+* The upload variable is sent as `null` in `operations`; the `map` part connects it to the file.

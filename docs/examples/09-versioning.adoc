@@ -1,0 +1,65 @@
+= Check out, check in and versions
+
+Checking out a document creates a reservation (a working copy). Checking it in turns the reservation into a new version.
+
+== Operations
+
+.graphql/09-versioning/checkout-document.graphql
+[source,graphql]
+----
+include::../../graphql/09-versioning/checkout-document.graphql[]
+----
+
+.graphql/09-versioning/checkin-document.graphql
+[source,graphql]
+----
+include::../../graphql/09-versioning/checkin-document.graphql[]
+----
+
+.graphql/09-versioning/cancel-checkout.graphql
+[source,graphql]
+----
+include::../../graphql/09-versioning/cancel-checkout.graphql[]
+----
+
+.graphql/09-versioning/versions.graphql
+[source,graphql]
+----
+include::../../graphql/09-versioning/versions.graphql[]
+----
+
+== curl
+
+[source,bash]
+----
+curl/09-versioning.sh checkout "{DOCUMENT-ID}"    # returns the id of the reservation
+curl/09-versioning.sh checkin  "{RESERVATION-ID}"
+curl/09-versioning.sh versions "{DOCUMENT-ID}"
+curl/09-versioning.sh cancel   "{RESERVATION-ID}"
+----
+
+== Node.js
+
+[source,bash]
+----
+node nodejs/src/examples/09-versioning.js checkout "{DOCUMENT-ID}"
+----
+
+.nodejs/src/examples/09-versioning.js
+[source,javascript]
+----
+include::../../nodejs/src/examples/09-versioning.js[]
+----
+
+== Java
+
+[source,bash]
+----
+cd java && mvn -q compile exec:java -Dexec.args="versioning checkout {DOCUMENT-ID}"
+----
+
+See `Examples#checkout`, `Examples#checkin`, `Examples#cancelCheckout` and `Examples#versions`.
+
+== Notes
+
+Check in and cancel operate on the *reservation id* returned by the checkout, not on the id of the released version.

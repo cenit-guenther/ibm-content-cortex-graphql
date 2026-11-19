@@ -1,0 +1,15 @@
+# Searches documents with a SQL-like WHERE clause (FileNet search syntax).
+# Example variables:
+#   "from": "Document"
+#   "where": "DocumentTitle LIKE 'Invoice%'"
+query SearchDocuments($repositoryIdentifier: String!, $from: String!, $where: String, $pageSize: Int) {
+  documents(
+    repositoryIdentifier: $repositoryIdentifier
+    from: $from
+    where: $where
+    pageSize: $pageSize
+  ) {
+    documents { id name className }
+    pageInfo { token }
+  }
+}

@@ -1,0 +1,57 @@
+= Introspection
+
+GraphQL describes itself. Use introspection to learn which types and fields your FileNet version offers. This is the best first call: it needs no object store and tells you whether endpoint, credentials and TLS are working.
+
+== Queries
+
+.graphql/01-introspection/schema-overview.graphql
+[source,graphql]
+----
+include::../../graphql/01-introspection/schema-overview.graphql[]
+----
+
+.graphql/01-introspection/type-details.graphql
+[source,graphql]
+----
+include::../../graphql/01-introspection/type-details.graphql[]
+----
+
+== curl
+
+[source,bash]
+----
+curl/01-introspection.sh            # schema overview
+curl/01-introspection.sh Document   # fields of the type Document
+----
+
+.curl/01-introspection.sh
+[source,bash]
+----
+include::../../curl/01-introspection.sh[lines=3..]
+----
+
+== Node.js
+
+[source,bash]
+----
+node nodejs/src/examples/01-introspection.js [TypeName]
+----
+
+.nodejs/src/examples/01-introspection.js
+[source,javascript]
+----
+include::../../nodejs/src/examples/01-introspection.js[]
+----
+
+== Java
+
+[source,bash]
+----
+cd java && mvn -q compile exec:java -Dexec.args="introspection [TypeName]"
+----
+
+See `Examples#schemaOverview` and `Examples#typeDetails` in `java/src/main/java/io/github/filenet/graphql/examples/Examples.java`.
+
+== Notes
+
+The response lists, for example, `Document`, `Folder` and `ContentTransfer`. Use the type details to check property names before you adapt the other examples.

@@ -1,0 +1,128 @@
+= IBM FileNet GraphQL Examples
+:toc: macro
+:icons: font
+
+Hands-on, tested example calls for the *IBM FileNet Content Services GraphQL* API, implemented with *curl*, *Node.js* and *Java*.
+
+The repository is meant for training, documentation and as a starting point for anyone who begins to work with the FileNet GraphQL interface.
+
+toc::[]
+
+== What is inside
+
+[cols="1,3"]
+|===
+|Directory |Content
+
+|`graphql/`
+|The GraphQL queries and mutations, one file per operation. They are the single source of truth and are shared by all implementations.
+
+|`curl/`
+|Bash scripts that call the API with `curl` (`lib.sh` contains the shared helpers).
+
+|`nodejs/`
+|Dependency-free Node.js (ES modules, built-in `fetch`) client, examples and tests.
+
+|`java/`
+|Maven project (Java 17, `java.net.http`, Jackson) with client, examples and JUnit 5 tests.
+
+|`docs/`
+|The documentation in AsciiDoc. Start with link:docs/index.adoc[docs/index.adoc].
+
+|`scripts/`
+|Helper scripts, for example `run-all-tests.sh`.
+|===
+
+== Topics covered
+
+[cols="1,3"]
+|===
+|# |Topic
+
+|01 |Introspection: explore the schema
+|02 |Repositories (object stores)
+|03 |Fetch documents and folders by id or path
+|04 |Search with SQL-like `where` clauses
+|05 |Create, rename and delete folders
+|06 |Create a document with content upload (multipart)
+|07 |Download content
+|08 |Update properties (metadata)
+|09 |Check out, check in and versions
+|10 |Security: read permissions (ACL)
+|===
+
+== Quick start
+
+. Copy the environment template and fill in your values:
++
+[source,bash]
+----
+cp .env.example .env
+----
+. Run an example (here: list the repositories):
++
+[source,bash]
+----
+curl/02-repository.sh                                    # curl
+node nodejs/src/examples/02-repository.js               # Node.js 20.12+
+cd java && mvn -q compile exec:java -Dexec.args="repository"   # Java 17+, Maven
+----
+
+== Configuration
+
+All connection data is read from environment variables (or from `.env` in the repository root). Variables that are already set in the environment take precedence over `.env`.
+
+[cols="2,3,1"]
+|===
+|Variable |Description |Required
+
+|`FILENET_GRAPHQL_URL`
+|URL of the GraphQL endpoint, for example `https://host:9443/content-services-graphql/graphql`
+|yes
+
+|`FILENET_OBJECT_STORE`
+|Symbolic name or id of the object store
+|yes
+
+|`FILENET_USER`, `FILENET_PASSWORD`
+|Basic authentication (default)
+|yes, unless a token is set
+
+|`FILENET_TOKEN`
+|Bearer token; takes precedence over user and password
+|no
+
+|`FILENET_TEST_FOLDER`
+|Parent folder for test data created by the tests (default `/`)
+|no
+
+|`FILENET_CA_CERT`
+|curl only: PEM file with your server CA
+|no
+|===
+
+NOTE: Never commit credentials. `.env` is listed in `.gitignore`.
+
+== Tests
+
+The tests are *integration tests against a real FileNet server*. Each test run creates a uniquely named folder with a test document below `FILENET_TEST_FOLDER`, exercises all topics and removes the data again. Without configuration the tests are skipped.
+
+[source,bash]
+----
+scripts/run-all-tests.sh      # all implementations
+bash curl/test.sh             # curl only
+cd nodejs && npm test         # Node.js only
+cd java && mvn test           # Java only
+----
+
+WARNING: Run the tests only against a test or development system.
+
+== Compatibility
+
+The queries follow the public schema of IBM FileNet Content Services GraphQL. Field names can differ between versions; use the introspection example (01) to check your installation and see link:docs/troubleshooting.adoc[Troubleshooting].
+
+== Contributing and license
+
+See link:CONTRIBUTING.adoc[CONTRIBUTING] and link:SECURITY.adoc[SECURITY]. Licensed under the Apache License 2.0, see link:LICENSE[LICENSE].
+
+This is an independent community project and is not affiliated with or endorsed by IBM. IBM and FileNet are trademarks of International Business Machines Corporation.

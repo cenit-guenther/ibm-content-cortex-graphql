@@ -1,0 +1,50 @@
+= Repositories (object stores)
+
+A repository is a FileNet object store. List the ones you can access and read the configured one.
+
+== Queries
+
+.graphql/02-repository/repositories.graphql
+[source,graphql]
+----
+include::../../graphql/02-repository/repositories.graphql[]
+----
+
+.graphql/02-repository/repository.graphql
+[source,graphql]
+----
+include::../../graphql/02-repository/repository.graphql[]
+----
+
+== curl
+
+[source,bash]
+----
+curl/02-repository.sh
+----
+
+== Node.js
+
+[source,bash]
+----
+node nodejs/src/examples/02-repository.js
+----
+
+.nodejs/src/examples/02-repository.js
+[source,javascript]
+----
+include::../../nodejs/src/examples/02-repository.js[]
+----
+
+== Java
+
+[source,bash]
+----
+cd java && mvn -q compile exec:java -Dexec.args="repository"
+----
+
+See `Examples#repositories` and `Examples#repository`.
+
+== Notes
+
+The value of `symbolicName` is what you put into `FILENET_OBJECT_STORE`.

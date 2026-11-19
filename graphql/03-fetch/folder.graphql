@@ -1,0 +1,14 @@
+# Fetches a folder by id or path, including its sub folders and contained documents.
+query Folder($repositoryIdentifier: String!, $identifier: String!) {
+  folder(repositoryIdentifier: $repositoryIdentifier, identifier: $identifier) {
+    id
+    name
+    pathName
+    subFolders {
+      folders { id name }
+    }
+    containedDocuments {
+      documents { id name }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# Fetches a document by id ("{GUID}") or by path ("/Folder/Name").
+query Document($repositoryIdentifier: String!, $identifier: String!) {
+  document(repositoryIdentifier: $repositoryIdentifier, identifier: $identifier) {
+    id
+    name
+    className
+    mimeType
+    contentSize
+    majorVersionNumber
+    minorVersionNumber
+    creator
+    dateCreated
+    dateLastModified
+  }
+}

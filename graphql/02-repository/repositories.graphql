@@ -1,0 +1,8 @@
+# Lists all repositories (object stores) the caller can access.
+query Repositories {
+  repositories {
+    id
+    symbolicName
+    name
+  }
+}

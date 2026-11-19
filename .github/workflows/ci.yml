@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      integration:
+        description: Run integration tests against FileNet (requires repository secrets)
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+      - name: Lint shell scripts
+        run: shellcheck -x -S warning curl/*.sh scripts/*.sh
+      - name: Node.js syntax check and tests (integration tests skip without credentials)
+        run: cd nodejs && npm run lint && npm test
+      - name: Java build and tests (integration tests skip without credentials)
+        run: cd java && mvn -B verify
+      - name: Render AsciiDoc
+        run: |
+          sudo gem install asciidoctor
+          asciidoctor -o /dev/null README.adoc docs/index.adoc
+
+  integration:
+    if: github.event_name == 'workflow_dispatch' && inputs.integration
+    runs-on: ubuntu-latest
+    env:
+      FILENET_GRAPHQL_URL: ${{ secrets.FILENET_GRAPHQL_URL }}
+      FILENET_OBJECT_STORE: ${{ secrets.FILENET_OBJECT_STORE }}
+      FILENET_USER: ${{ secrets.FILENET_USER }}
+      FILENET_PASSWORD: ${{ secrets.FILENET_PASSWORD }}
+      FILENET_TEST_FOLDER: ${{ secrets.FILENET_TEST_FOLDER }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+      - run: scripts/run-all-tests.sh

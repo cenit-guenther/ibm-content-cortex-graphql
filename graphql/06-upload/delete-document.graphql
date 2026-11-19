@@ -1,0 +1,6 @@
+# Deletes one document version. Use it to clean up; delete every version of a version series.
+mutation DeleteDocument($repositoryIdentifier: String!, $identifier: String!) {
+  deleteDocument(repositoryIdentifier: $repositoryIdentifier, identifier: $identifier) {
+    id
+  }
+}

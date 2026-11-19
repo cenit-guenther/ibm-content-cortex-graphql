@@ -1,0 +1,7 @@
+= Security Policy
+
+This repository contains example code only. Please do not commit credentials, tokens or customer data.
+
+If you find a security problem in the examples (for example credentials that are logged or sent to the wrong host), report it privately through the GitHub "Report a vulnerability" feature of this repository instead of opening a public issue.
+
+TLS certificates are always verified. If your FileNet server uses a private CA, configure the trust store (see docs/authentication.adoc) instead of disabling verification.

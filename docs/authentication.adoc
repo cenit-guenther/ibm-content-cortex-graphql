@@ -1,0 +1,35 @@
+= Authentication and TLS
+
+== Basic authentication (default)
+
+Set `FILENET_USER` and `FILENET_PASSWORD`. All implementations send an `Authorization: Basic <base64(user:password)>` header with every request, including content downloads.
+
+[source,bash]
+----
+curl --user "$FILENET_USER:$FILENET_PASSWORD" \
+     --header "Content-Type: application/json" \
+     --data '{"query":"{ repositories { id symbolicName } }"}' \
+     "$FILENET_GRAPHQL_URL"
+----
+
+== Bearer token (optional)
+
+Set `FILENET_TOKEN` to send `Authorization: Bearer <token>` instead. This is useful when your deployment uses OpenID Connect or another token-based setup. When `FILENET_TOKEN` is set, user and password are ignored. How you obtain the token depends on your identity provider and is out of scope.
+
+== TLS
+
+Certificates are always verified. For a server with a private CA:
+
+[cols="1,3"]
+|===
+|Tool |Setting
+
+|curl |`FILENET_CA_CERT=/path/to/ca.pem` (passed as `--cacert`)
+|Node.js |`NODE_EXTRA_CA_CERTS=/path/to/ca.pem`
+|Java |`-Djavax.net.ssl.trustStore=/path/to/truststore.p12 -Djavax.net.ssl.trustStorePassword=...`, for example `MAVEN_OPTS` or `-DargLine` for tests
+|===
+
+== Keep secrets out of the repository
+
+* Use `.env` (git-ignored) or your shell environment, never source files.
+* Avoid putting passwords on command lines on shared systems; they are visible in the process list.

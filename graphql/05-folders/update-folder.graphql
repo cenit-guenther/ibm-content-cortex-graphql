@@ -1,0 +1,12 @@
+# Renames a folder.
+mutation UpdateFolder($repositoryIdentifier: String!, $identifier: String!, $name: String!) {
+  updateFolder(
+    repositoryIdentifier: $repositoryIdentifier
+    identifier: $identifier
+    folderProperties: { name: $name }
+  ) {
+    id
+    name
+    pathName
+  }
+}

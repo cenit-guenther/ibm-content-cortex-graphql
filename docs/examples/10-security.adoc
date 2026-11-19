@@ -1,0 +1,45 @@
+= Security: permissions
+
+Every object has an access control list. This example reads it.
+
+== Query
+
+.graphql/10-security/permissions.graphql
+[source,graphql]
+----
+include::../../graphql/10-security/permissions.graphql[]
+----
+
+== curl
+
+[source,bash]
+----
+curl/10-security.sh "/demo/hello.txt"
+----
+
+== Node.js
+
+[source,bash]
+----
+node nodejs/src/examples/10-security.js "/demo/hello.txt"
+----
+
+.nodejs/src/examples/10-security.js
+[source,javascript]
+----
+include::../../nodejs/src/examples/10-security.js[]
+----
+
+== Java
+
+[source,bash]
+----
+cd java && mvn -q compile exec:java -Dexec.args="security /demo/hello.txt"
+----
+
+See `Examples#permissions`.
+
+== Notes
+
+* `accessMask` is a bit mask of FileNet access rights; `permissionSource` tells whether an entry is direct, inherited or from a template.
+* The examples only read permissions on purpose; changing ACLs on a shared system can lock users out.

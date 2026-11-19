@@ -1,0 +1,15 @@
+# Reads the access control list (permissions) of a document.
+query Permissions($repositoryIdentifier: String!, $identifier: String!) {
+  document(repositoryIdentifier: $repositoryIdentifier, identifier: $identifier) {
+    id
+    name
+    permissions {
+      granteeName
+      type
+      accessType
+      accessMask
+      inheritableDepth
+      permissionSource
+    }
+  }
+}

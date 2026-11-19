@@ -1,0 +1,24 @@
+# Updates the name and a custom/system property (by symbolic name) of a document.
+mutation UpdateDocument(
+  $repositoryIdentifier: String!
+  $identifier: String!
+  $name: String!
+  $title: String!
+) {
+  updateDocument(
+    repositoryIdentifier: $repositoryIdentifier
+    identifier: $identifier
+    documentProperties: {
+      name: $name
+      properties: [{ symbolicName: "DocumentTitle", value: $title }]
+    }
+  ) {
+    id
+    name
+    properties(includes: ["DocumentTitle"]) {
+      id
+      label
+      value
+    }
+  }
+}

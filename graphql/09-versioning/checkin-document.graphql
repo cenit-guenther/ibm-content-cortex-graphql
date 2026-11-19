@@ -1,0 +1,14 @@
+# Checks in a reservation as a new major version.
+mutation CheckinDocument($repositoryIdentifier: String!, $identifier: String!) {
+  checkinDocument(
+    repositoryIdentifier: $repositoryIdentifier
+    documentIdentifier: $identifier
+    checkinAction: { checkinMinorVersion: false }
+  ) {
+    id
+    name
+    majorVersionNumber
+    minorVersionNumber
+    isCurrentVersion
+  }
+}

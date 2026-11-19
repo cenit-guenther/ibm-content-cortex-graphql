@@ -1,0 +1,51 @@
+= Download content
+
+Downloading is a two-step process: read the `downloadUrl` of the content element with GraphQL, then fetch that URL with an authenticated `GET`.
+
+== Query
+
+.graphql/07-download/document-content.graphql
+[source,graphql]
+----
+include::../../graphql/07-download/document-content.graphql[]
+----
+
+== curl
+
+[source,bash]
+----
+curl/07-download.sh "/demo/hello.txt" ./hello-downloaded.txt
+----
+
+.curl/07-download.sh
+[source,bash]
+----
+include::../../curl/07-download.sh[lines=3..]
+----
+
+== Node.js
+
+[source,bash]
+----
+node nodejs/src/examples/07-download.js "/demo/hello.txt" ./hello-downloaded.txt
+----
+
+.nodejs/src/examples/07-download.js
+[source,javascript]
+----
+include::../../nodejs/src/examples/07-download.js[]
+----
+
+== Java
+
+[source,bash]
+----
+cd java && mvn -q compile exec:java -Dexec.args="download /demo/hello.txt ./hello-downloaded.txt"
+----
+
+See `Examples#downloadContent` and `FileNetClient#download`.
+
+== Notes
+
+* A document can have several content elements; the examples use the first one.
+* The same credentials are used for the GraphQL call and for the download.

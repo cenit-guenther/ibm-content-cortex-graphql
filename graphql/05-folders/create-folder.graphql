@@ -1,0 +1,11 @@
+# Creates a folder below an existing parent folder. $parent is an id or a path such as "/".
+mutation CreateFolder($repositoryIdentifier: String!, $name: String!, $parent: String!) {
+  createFolder(
+    repositoryIdentifier: $repositoryIdentifier
+    folderProperties: { name: $name, parent: { identifier: $parent } }
+  ) {
+    id
+    name
+    pathName
+  }
+}

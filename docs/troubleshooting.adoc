@@ -1,0 +1,34 @@
+= Troubleshooting
+
+[cols="1,2"]
+|===
+|Symptom |Check
+
+|`Missing environment variable`
+|Set the variables or create `.env` (see README). Variables in the shell override `.env`.
+
+|HTTP 401
+|Wrong credentials or token. For Basic auth make sure no stray quotes or spaces are part of the values.
+
+|HTTP 404 on the endpoint
+|Check the context path of your installation; it usually ends in `/content-services-graphql/graphql`.
+
+|`PKIX path building failed`, `unable to get local issuer certificate`, `UNABLE_TO_VERIFY_LEAF_SIGNATURE`
+|The server certificate is not trusted. Configure your CA, see <<_authentication_and_tls,Authentication and TLS>>.
+
+|`Cannot query field ...` / `Unknown argument ...`
+|Your FileNet version has a different schema. Compare with the introspection output (`01-introspection` with a type name, for example `Document`).
+
+|HTTP 200 with `errors`
+|The message names the failing field. Typical causes are a wrong identifier, missing permissions or a class without the requested property.
+
+|Upload fails
+|Check that the `map` part points to `variables.file` and that the content type is valid. Some reverse proxies limit the request size.
+
+|Test data is left behind
+|Tests clean up at the end. After a crash, delete folders named `gql-example-*` below `FILENET_TEST_FOLDER`.
+|===
+
+== Verification status
+
+The query files are derived from the documented FileNet Content Services GraphQL schema. Report differences you find on your version (name, version and fix-pack) through an issue so the examples can be adapted.

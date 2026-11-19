@@ -1,0 +1,13 @@
+{
+  "name": "filenet-graphql-examples-node",
+  "version": "1.0.0",
+  "description": "Node.js examples for the IBM FileNet Content Services GraphQL API",
+  "type": "module",
+  "license": "Apache-2.0",
+  "private": true,
+  "engines": { "node": ">=20.12" },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "lint": "node --check src/client.js && for f in src/examples/*.js test/*.js; do node --check \"$f\" || exit 1; done"
+  }
+}

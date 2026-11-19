@@ -1,0 +1,27 @@
+# Creates a document with one content element and files it into a folder.
+# $file is of the scalar type Upload; it is sent as a multipart request
+# (GraphQL multipart request specification), see docs/examples/06-upload.adoc.
+mutation CreateDocument(
+  $repositoryIdentifier: String!
+  $name: String!
+  $folder: String!
+  $contentType: String!
+  $file: Upload
+) {
+  createDocument(
+    repositoryIdentifier: $repositoryIdentifier
+    documentProperties: {
+      name: $name
+      contentElements: {
+        replace: [{ type: CONTENT_TRANSFER, contentType: $contentType, content: $file }]
+      }
+    }
+    fileInFolderIdentifier: $folder
+    checkinAction: {}
+  ) {
+    id
+    name
+    mimeType
+    contentSize
+  }
+}
